@@ -33,10 +33,10 @@ model_options = ['Model_ann', 'Model_cnn']  # Add model names accordingly
 selected_model = st.radio('Pilih Model:', model_options)
 
 if selected_model == 'Model_ann':
-    model_path = 'E:\\syntax code\\python\\jupytr\\neural network\\diabetes\\model\\diabetes_ANN.h5'
+    model_path = 'luckyseven-ux\\diabetes\\diabetes_ANN.h5'
 # Update with the correct file path
 elif selected_model == 'Model_cnn':
-    model_path = 'E:\\syntax code\\python\\jupytr\\neural network\\diabetes\\model\\diabetes_CNN.h5'
+    model_path = 'luckyseven-ux\\diabetes\\diabetes_CNN.h5'
 
 diabetes_model = load_model_file(model_path)
 
