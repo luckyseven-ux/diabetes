@@ -2,7 +2,7 @@ import streamlit as st
 import numpy as np
 from tensorflow.keras.models import load_model
 
-# Function to load the selected model
+# Fungsi untuk memuat model yang dipilih
 def load_model_file(model_path):
     try:
         loaded_model = load_model(model_path)
@@ -12,47 +12,48 @@ def load_model_file(model_path):
         st.error(f"Error saat membaca model: {e}")
         return None
 
-# Function to make diabetes prediction
+# Fungsi untuk melakukan prediksi diabetes
 def predict_diabetes(model, input_data):
     if model:
         prediction = model.predict(input_data)
         return prediction[0]
     return None
 
-# Function to display the prediction result
+# Fungsi untuk menampilkan hasil prediksi
 def display_diagnosis(prediction):
     if prediction is not None:
-        return 'The person is diabetic' if prediction == 1 else 'The person is not diabetic'
+        return 'Orang tersebut menderita diabetes' if prediction > 0.5 else 'Orang tersebut tidak menderita diabetes'
     return ''
 
-# Streamlit app
+# Aplikasi Streamlit
 st.title('Prediksi Diabetes Menggunakan Neural Network')
 
-# Load models
-model_options = ['Model_ann', 'Model_cnn']  # Add model names accordingly
+# Pilihan model
+model_options = ['Model_ann', 'Model_cnn']  # Tambahkan nama model sesuai kebutuhan
 selected_model = st.radio('Pilih Model:', model_options)
 
+model_folder = 'luckyseven-ux/diabetes/'  # Sesuaikan path folder ini
+
 if selected_model == 'Model_ann':
-    model_path = 'luckyseven-ux\\diabetes\\diabetes_ANN.h5'
-# Update with the correct file path
+    model_path = model_folder + 'diabetes_ANN.h5'
 elif selected_model == 'Model_cnn':
-    model_path = 'luckyseven-ux\\diabetes\\diabetes_CNN.h5'
+    model_path = model_folder + 'diabetes_CNN.h5'
 
 diabetes_model = load_model_file(model_path)
 
-# Input form
+# Form input
 input_columns = ['Pregnancies', 'Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI', 'DiabetesPedigreeFunction', 'Age']
 input_data = [st.text_input(f'{column}:') for column in input_columns]
 
-# Handling empty string inputs
+# Mengatasi input string kosong
 input_data = [float(val) if val != '' else 0.0 for val in input_data]
 
-# Convert to NumPy array
+# Konversi menjadi array NumPy
 input_data = np.array(input_data).reshape(1, -1)
 
-# Prediction and result
+# Prediksi dan hasil
 diagnosis = ''
-if st.button('Diabetes Test Result'):
+if st.button('Hasil Test Diabetes'):
     prediction = predict_diabetes(diabetes_model, input_data)
     diagnosis = display_diagnosis(prediction)
 
