@@ -1,6 +1,11 @@
 import streamlit as st
 import numpy as np
 from tensorflow.keras.models import load_model
+import matplotlib.pyplot as plt
+import seaborn as sns
+import warnings
+warnings.filterwarnings('ignore')
+# Menampilkan distribusi variabel
 
 # Function to load the selected model
 def load_model_file(model_path):
@@ -56,4 +61,44 @@ if st.button('Diabetes Test Result'):
     prediction = predict_diabetes(diabetes_model, input_data)
     diagnosis = display_diagnosis(prediction)
 
-st.success(diagnosis)
+    # Visualisasi
+    st.subheader('Visualisasi Input')
+    fig, ax = plt.subplots()
+    values = [float(val) for val in input_data[0]]
+    ax.bar(input_columns, values, color=sns.color_palette('viridis'))
+    ax.set_ylabel('Nilai Input')
+    ax.set_title('Input Data untuk Prediksi Diabetes')
+    st.pyplot(fig)
+    st.set_option('deprecation.showPyplotGlobalUse', False)
+
+
+    # Menampilkan diagnosis
+    st.success(diagnosis)
+
+    # Menampilkan ringkasan statistik
+    st.subheader('Ringkasan Statistik')
+    st.write(f"**Rata-rata Glukosa:** {np.mean(input_data[0, 1]):.2f}")
+    st.write(f"**Rata-rata Tekanan Darah:** {np.mean(input_data[0, 2]):.2f}")
+    # Tambahkan statistik lainnya sesuai kebutuhan
+    
+    # Menampilkan distribusi variabel
+    st.subheader('Distribusi Variabel')
+    for i, column in enumerate(input_columns):
+        st.write(f"**{column}:**")
+        sns.histplot(input_data[:, i], kde=True)
+
+        st.pyplot()
+
+    # Menampilkan korelasi antar variabel
+    input_data_2d = input_data.reshape(-1, 1)  # Reshape to a column vector
+    st.subheader('Korelasi Antar Variabel')
+    correlation_matrix = np.corrcoef(input_data_2d, rowvar=False)
+    print(correlation_matrix.shape)
+    sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', square=True)
+    st.pyplot()
+
+    st.subheader('Distribusi Variabel')
+    for i, column in enumerate(input_columns):
+        st.write(f"**{column}:**")
+        sns.histplot(input_data[:, i], kde=True)
+        st.pyplot()
