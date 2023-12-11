@@ -27,7 +27,7 @@ def predict_diabetes(model, input_data):
 # Function to display the prediction result
 def display_diagnosis(prediction):
     if prediction is not None:
-        return 'The person is diabetic' if prediction == 1 else 'The person is not diabetic'
+        return 'Orang tersebut terkena diabetes' if np.any(prediction == 1) else 'Orang tersebut tidak terkena diabetes'
     return ''
 
 # Streamlit app
