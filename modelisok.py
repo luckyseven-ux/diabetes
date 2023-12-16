@@ -67,7 +67,3 @@ if st.button('Diabetes Test Result'):
         diagnosis = display_diagnosis(prediction)
         # Menampilkan diagnosis
         st.success(diagnosis)
-        st.subheader('Nilai Prediksi')
-        st.write(f"Nilai Prediksi: {prediction[0]:.2f}")
-    else:
-        st.error("Error dalam melakukan prediksi.")
