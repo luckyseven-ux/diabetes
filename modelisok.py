@@ -29,7 +29,7 @@ def predict_diabetes(model, input_data):
 # Fungsi untuk menampilkan hasil prediksi
 def display_diagnosis(prediction):
     if prediction is not None:
-        return 'Orang tersebut terkena diabetes' if prediction[0] > 1 else 'Orang tersebut bebas diabetes'
+        return 'Orang tersebut terkena diabetes' if prediction[0] < 1 else 'Orang tersebut bebas diabetes'
     return ''
 
 
