@@ -34,13 +34,13 @@ def display_diagnosis(prediction):
 st.title('Prediksi Diabetes Menggunakan Neural Network')
 
 # Load models
-model_options = ['Model_ann', 'Model_cnn']  # Add model names accordingly
+model_options = ['Model_ANN', 'Model_DNN']  # Add model names accordingly
 selected_model = st.radio('Pilih Model:', model_options)
 
-if selected_model == 'Model_ann':
+if selected_model == 'Model_ANN':
     model_path = 'diabetes_ANN.h5'
 # Update with the correct file path
-elif selected_model == 'Model_cnn':
+elif selected_model == 'Model_DNN':
     model_path = 'diabetes_CNN.h5'
 
 diabetes_model = load_model_file(model_path)
